@@ -503,10 +503,13 @@ with tab_match:
             default=["TIER1", "TIER3", "—"],
         )
     with filter_col2:
+        # Labels in the DataFrame are emoji-prefixed (e.g. "✅ MATCHED")
+        # so the multiselect options must match that format exactly.
+        label_options = [f"{LABEL_EMOJI_MAP.get(l, '')} {l}" for l in ALL_LABELS]
         label_filter = st.multiselect(
             "Filter by label",
-            options=ALL_LABELS,
-            default=ALL_LABELS,
+            options=label_options,
+            default=label_options,
         )
 
     r_df = results_to_df(match_results)
